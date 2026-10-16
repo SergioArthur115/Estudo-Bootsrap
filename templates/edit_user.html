@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar usuário · Anime Mania{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-7 col-xl-6">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h1 class="h4 text-center mb-4">Editar usuário</h1>
+
+                <form method="POST" enctype="multipart/form-data" class="row g-3 needs-validation" novalidate>
+                    {% include 'partials/form_usuario.html' %}
+                    <div class="col-12 d-flex justify-content-between gap-2">
+                        <a href="{{ url_for('admin.admin') }}" class="btn btn-outline-secondary">Voltar</a>
+                        <button type="submit" class="btn btn-primary">Salvar alterações</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

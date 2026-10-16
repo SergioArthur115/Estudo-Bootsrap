@@ -1,0 +1,4 @@
+{% macro imagem(arquivo, alt) %}
+<img src="{{ url_for('static', filename='images/' + arquivo) }}"
+     class="img-fluid rounded shadow-sm my-4" alt="{{ alt }}">
+{% endmacro %}

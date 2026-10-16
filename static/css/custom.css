@@ -1,0 +1,18 @@
+.card-hover {
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+@media (hover: hover) {
+    .card-hover:hover,
+    .card-hover:focus-within {
+        transform: scale(1.04);
+        box-shadow: var(--bs-box-shadow) !important;
+        z-index: 1;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .card-hover {
+        transition: none;
+    }
+}

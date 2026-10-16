@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Início · Anime Mania{% endblock %}
+
+
+{% block content %}
+<h1 class="h3 mb-4">Últimas notícias</h1>
+
+<div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+    {% for n in noticias %}
+    <div class="col">
+        <div class="card h-100 shadow-sm card-hover">
+            <div class="ratio ratio-16x9">
+                <img src="{{ url_for('static', filename='images/' + n.imagem) }}"
+                     class="card-img-top object-fit-cover" alt="{{ n.titulo }}">
+            </div>
+            <div class="card-body">
+                <span class="badge text-bg-primary mb-2">{{ n.categoria }}</span>
+                <h5 class="card-title">{{ n.titulo }}</h5>
+                <p class="card-text">{{ n.resumo }}</p>
+            </div>
+            <div class="card-footer bg-transparent border-0 pb-3">
+                <a href="{{ url_for(n.endpoint) }}" class="btn btn-primary stretched-link">Ler mais</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

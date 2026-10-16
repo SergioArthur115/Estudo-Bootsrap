@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Cadastro · Anime Mania{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-7 col-xl-6">
+
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h1 class="h4 text-center mb-4">Criar sua conta</h1>
+
+                <form method="POST" action="{{ url_for('auth.cadastro') }}" enctype="multipart/form-data"
+                    class="row g-3 needs-validation" novalidate>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                    <div class="col-md-6">
+                        <label for="nome" class="form-label">Nome</label>
+                        <input type="text" class="form-control" id="nome" name="nome" required>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="sobrenome" class="form-label">Sobrenome</label>
+                        <input type="text" class="form-control" id="sobrenome" name="sobrenome" required>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="email" class="form-label">E-mail</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="seu@email.com"
+                            required>
+                        <div class="invalid-feedback">Informe um e-mail válido.</div>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="senha" class="form-label">Senha</label>
+                        <input type="password" class="form-control" id="senha" name="senha" autocomplete="new-password"
+                            required>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="foto" class="form-label">Foto de perfil <span
+                                class="text-body-secondary">(opcional)</span></label>
+                        <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
+                        <div class="form-text">PNG, JPG, GIF ou WEBP, até 2 MB.</div>
+                    </div>
+
+                    <div class="col-12 d-grid">
+                        <button type="submit" class="btn btn-primary">Criar conta</button>
+                    </div>
+                </form>
+
+                <p class="text-center text-body-secondary mt-3 mb-0">
+                    Já tem uma conta? <a href="{{ url_for('auth.login') }}">Entrar</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

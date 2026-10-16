@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <article class="col-lg-8 mx-auto">
+
+        <h1 class="display-6 fw-bold mb-3">{% block titulo_artigo %}{% endblock %}</h1>
+
+        {% block meta %}{% endblock %}
+
+        {% block corpo %}{% endblock %}
+
+        <hr class="my-5">
+        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">&larr; Voltar para a página inicial</a>
+
+    </article>
+</div>
+{% endblock %}

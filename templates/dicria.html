@@ -1,0 +1,33 @@
+{% extends 'artigo.html' %}
+
+{% block title %}Mostra Dicria · Anime Mania{% endblock %}
+
+{% block titulo_artigo %}Mostra Dicria será exposta no próximo sábado no RJ{% endblock %}
+
+{% block meta %}
+<p class="text-body-secondary small mb-4">Jean Clemente · 27 de setembro de 2023 às 18:51</p>
+<p class="lead">Exposição do MAR traz mangás criados por crianças que frequentam a Mangateca Dicria.</p>
+{% endblock %}
+
+{% block corpo %}
+<p>O Museu de Arte do Rio exibirá no próximo sábado (30) a Mostra Dicria, feita pela Mangateca Dicria. Os
+    mangás autorais foram criados a partir da exposição Funk, um grito de ousadia e liberdade. A mostra será
+    aberta às 14h e será gratuita.
+    Os visitantes também poderão conferir como foi o processo de criação das histórias. Vale destacar que
+    todas foram criadas por crianças do Morro do Fallet e crias da Dicria.</p>
+
+<p>Criado por Ed Cura, carioca do Morro do Fallet, o Anime DICRIA começou como um perfil nas redes sociais
+    colocando personagens de animê em cenas do cotidiano do Rio de Janeiro. O nome é uma alusão ao modo como
+    as crianças criadas nas favelas do Rio são chamadas, os “crias”.
+    A página do Instagram, que já conta com mais de 94 mil seguidores, foi criada em fevereiro de 2021 para
+    servir como uma espécie de “válvula de escape” em relação à pandemia, que interrompeu o trabalho de Ed
+    como fotógrafo de eventos, como ele conta ao jornal O Globo.
+    Em 2022, foi inaugurada a Mangateca Dicria, localizada no bairro de Santa Teresa. O objetivo do espaço é
+    incentivar a leitura através dos quadrinhos japoneses.
+    O JBox é um dos parceiros do projeto da Mangateca, auxiliando na parte logística e de divulgação da
+    mangateca — o site não foi (nem será) beneficiário de nenhum valor arrecadado pela campanha de apoio ao
+    projeto.</p>
+
+<img src="{{ url_for('static', filename='images/dicria.jpeg') }}" class="img-fluid rounded shadow-sm my-4"
+    alt="Mostra Dicria no Museu de Arte do Rio">
+{% endblock %}

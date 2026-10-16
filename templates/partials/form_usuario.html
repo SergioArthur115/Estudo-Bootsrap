@@ -1,0 +1,32 @@
+{# Espera a variável `user`. O <form> pai deve ter class="row g-3". #}
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    
+    <div class="col-12 text-center">
+        <img src="{{ url_for('static', filename='uploads/' + user.foto) }}"
+             class="rounded-circle object-fit-cover border" width="120" height="120"
+             alt="Foto de {{ user.nome }}">
+    </div>
+    
+    <div class="col-12">
+        <label for="foto" class="form-label">Alterar foto</label>
+        <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
+        <div class="form-text">PNG, JPG, GIF ou WEBP, até 2 MB.</div>
+    </div>
+    
+    <div class="col-md-6">
+        <label for="nome" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="nome" name="nome" value="{{ user.nome }}" required>
+        <div class="invalid-feedback">Informe o nome.</div>
+    </div>
+    
+    <div class="col-md-6">
+        <label for="sobrenome" class="form-label">Sobrenome</label>
+        <input type="text" class="form-control" id="sobrenome" name="sobrenome" value="{{ user.sobrenome }}" required>
+        <div class="invalid-feedback">Informe o sobrenome.</div>
+    </div>
+    
+    <div class="col-12">
+        <label for="email" class="form-label">E-mail</label>
+        <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}" required>
+        <div class="invalid-feedback">Informe um e-mail válido.</div>
+    </div>

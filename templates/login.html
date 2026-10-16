@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Entrar · Anime Mania{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-5 col-xl-4">
+
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h1 class="h4 text-center mb-4">Entrar na sua conta</h1>
+
+                <form method="POST" action="{{ url_for('auth.login') }}" class="needs-validation" novalidate>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">E-mail</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="seu@email.com"
+                            autocomplete="username" required autofocus>
+                        <div class="invalid-feedback">Informe um e-mail válido.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="senha" class="form-label">Senha</label>
+                        <input type="password" class="form-control" id="senha" name="senha"
+                            autocomplete="current-password" required>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Entrar</button>
+                    </div>
+                </form>
+
+                <p class="text-center text-body-secondary mt-3 mb-0">
+                    Não tem uma conta? <a href="{{ url_for('auth.cadastro') }}">Cadastre-se</a>
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,74 @@
+<nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark"><!--navbar-expand-lg define quando o menu quebra-->
+    <!--bg-dark define a cor da nav-->
+    <div class="container"><!--container define a posição dos conteudos na nav-->
+
+        <!-- Logo + nome -->
+        <a class="navbar-brand d-flex align-items-center" href="{{ url_for('index') }}">
+            <img src="{{ url_for('static', filename='images/anime-mania-logo_jpg_640.jpg') }}" alt="Anime Mania"
+                height="36" class="me-2 rounded">
+            Anime Mania
+        </a>
+
+        <!-- Botão hambúrguer (só aparece em telas pequenas) -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
+            aria-controls="menuPrincipal" aria-expanded="false" aria-label="Abrir menu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Parte que recolhe no celular -->
+        <div class="collapse navbar-collapse" id="menuPrincipal">
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.endpoint == 'index' %}active{% endif %}"
+                        href="{{ url_for('index') }}">Início</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.endpoint == 'user.noticias' %}active{% endif %}"
+                        href="{{ url_for('user.noticias') }}">Notícias</a>
+                </li>
+
+                {% if current_user %}
+                {% if current_user.is_admin %}
+                <li class="nav-item">
+                    <a class="nav-link {% if request.endpoint == 'admin.admin' %}active{% endif %}"
+                        href="{{ url_for('admin.admin') }}">Painel Admin</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link {% if request.endpoint == 'user.perfil' %}active{% endif %}"
+                        href="{{ url_for('user.perfil') }}">Perfil</a>
+                </li>
+                {% endif %}
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link {% if request.endpoint == 'auth.cadastro' %}active{% endif %}"
+                        href="{{ url_for('auth.cadastro') }}">Cadastro</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.endpoint == 'auth.login' %}active{% endif %}"
+                        href="{{ url_for('auth.login') }}">Entrar</a>
+                </li>
+                {% endif %}
+            </ul>
+
+            <!-- Busca: só para admin (é a única rota com busca hoje) -->
+            {% if current_user and current_user.is_admin %}
+            <form class="d-flex" role="search" action="{{ url_for('admin.admin') }}" method="get">
+                <input class="form-control me-2" type="search" name="search" placeholder="Buscar usuário"
+                    aria-label="Buscar usuário">
+                <button class="btn btn-outline-light" type="submit">Buscar</button>
+            </form>
+            {% endif %}
+            
+            {% if current_user %}
+            <a class="btn btn-outline-danger ms-lg-3 mt-2 mt-lg-0" href="{{ url_for('auth.logout') }}">Sair</a>
+            
+            {% endif %}
+            <button id="btnTema" type="button" class="btn btn-outline-light ms-lg-3 mt-2 mt-lg-0"
+                aria-label="Alternar entre tema claro e escuro">
+                Trocar Tema
+            </button>
+        </div>
+    </div>
+</nav>

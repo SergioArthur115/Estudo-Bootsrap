@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}Painel Admin · Anime Mania{% endblock %}
+
+{% block content %}
+<h1 class="h3 mb-4">Painel Admin</h1>
+
+<!-- Filtro: os name="search" e name="order" são os que admin() lê -->
+<form method="GET" class="row g-2 mb-4">
+    <div class="col-12 col-md">
+        <input type="search" class="form-control" name="search" placeholder="Buscar nome ou e-mail"
+            value="{{ search }}">
+    </div>
+    <div class="col-6 col-md-auto">
+        <select name="order" class="form-select">
+            <option value="nome" {% if order=='nome' %}selected{% endif %}>Ordenar por nome</option>
+            <option value="email" {% if order=='email' %}selected{% endif %}>Ordenar por e-mail</option>
+        </select>
+    </div>
+    <div class="col-6 col-md-auto d-grid">
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </div>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-hover align-middle">
+        <thead class="table-light">
+            <tr>
+                <th scope="col" style="width: 64px;"><span class="visually-hidden">Foto</span></th>
+                <th scope="col">Nome</th>
+                <th scope="col">E-mail</th>
+                <th scope="col" class="text-end">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in users %}
+            <tr>
+                <td>
+                    <img src="{{ url_for('static', filename='uploads/' + u.foto) }}"
+                        class="rounded-circle object-fit-cover" width="40" height="40" alt="Foto de {{ u.nome }}">
+                </td>
+                <td>
+                    {{ u.nome }} {{ u.sobrenome }}
+                    {% if u.is_admin %}<span class="badge text-bg-primary ms-1">Admin</span>{% endif %}
+                </td>
+                <td>{{ u.email }}</td>
+                <td class="text-end">
+                    <a href="{{ url_for('admin.edit', user_id=u.id) }}"
+                        class="btn btn-sm btn-outline-primary">Editar</a>
+                    <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                        data-bs-target="#modalExcluir" data-url="{{ url_for('admin.delete', user_id=u.id) }}"
+                        data-nome="{{ u.nome }}" {% if u.id==current_user.id %}disabled{% endif %}>Excluir</button>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4" class="text-center text-body-secondary py-4">Nenhum usuário encontrado.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% if total_pages > 1 %}
+<nav aria-label="Paginação de usuários">
+    <ul class="pagination justify-content-center">
+
+        <li class="page-item {% if page <= 1 %}disabled{% endif %}">
+            <a class="page-link"
+                href="{{ url_for('admin.admin', page=page - 1, search=search, order=order) }}">Anterior</a>
+        </li>
+
+        {% for p in range(1, total_pages + 1) %}
+        <li class="page-item {% if p == page %}active{% endif %}" {% if p==page %}aria-current="page" {% endif %}>
+            <a class="page-link" href="{{ url_for('admin.admin', page=p, search=search, order=order) }}">{{ p }}</a>
+        </li>
+        {% endfor %}
+
+        <li class="page-item {% if page >= total_pages %}disabled{% endif %}">
+            <a class="page-link"
+                href="{{ url_for('admin.admin', page=page + 1, search=search, order=order) }}">Próxima</a>
+        </li>
+
+    </ul>
+</nav>
+{% endif %}
+<div class="modal fade" id="modalExcluir" tabindex="-1" aria-labelledby="modalExcluirLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="POST" id="formExcluir">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <div class="modal-header">
+                    <h2 class="modal-title fs-5" id="modalExcluirLabel">Excluir usuário</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+
+                <div class="modal-body">
+                    Tem certeza que deseja excluir <strong id="modalExcluirNome"></strong>?
+                    Esta ação não pode ser desfeita.
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-danger">Excluir</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% block scripts %}
+<script>
+    document.getElementById('modalExcluir').addEventListener('show.bs.modal', event => {
+        const botao = event.relatedTarget;  // o botão "Excluir" que foi clicado
+        document.getElementById('formExcluir').action = botao.dataset.url;
+        document.getElementById('modalExcluirNome').textContent = botao.dataset.nome;
+    });
+</script>
+{% endblock %}
+{% endblock %}
